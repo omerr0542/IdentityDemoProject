@@ -1,5 +1,6 @@
 using EmailApp.Context;
 using EmailApp.Entites;
+using EmailApp.Validations;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
 
@@ -19,10 +20,16 @@ builder.Services.AddIdentity<AppUser, AppRole>(config =>
     //config.Password.RequireUppercase = false; // Büyük harf zorunluluðu
     //config.Password.RequireLowercase = false; // Küçük harf zorunluluðu
     //config.Password.RequireDigit = false; // Rakam zorunluluðu
-})
-                 .AddEntityFrameworkStores<AppDbContext>();
+})  .AddEntityFrameworkStores<AppDbContext>()
+    .AddErrorDescriber<CustomErrorDescriber>();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.ConfigureApplicationCookie(opt =>
+{
+    opt.Cookie.Name = "LoginCookie";
+    opt.LoginPath = "/Login/Index"; // Giriþ yapýlmamýþsa yönlendirilecek sayfa
+});
 
 var app = builder.Build();
 
@@ -37,6 +44,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication(); // Kimlik doðrulama middleware'ini ekliyoruz
 app.UseAuthorization();
 
 app.MapStaticAssets();

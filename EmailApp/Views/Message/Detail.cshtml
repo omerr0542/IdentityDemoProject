@@ -1,0 +1,32 @@
+﻿@model Message
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h3>@Model.Subject</h3>
+
+<table class="table table-striped">
+    <tr>
+        <th>Gönderen Ad Soyad: </th>
+        <td>@Model.Sender.FirstName @Model.Sender.LastName</td>
+    </tr>
+
+    <tr>
+        <th>Gönderen Mail: </th>
+        <td>@Model.Sender.Email</td>
+    </tr>
+
+    <tr>
+        <th>Konu: </th>
+        <td>@Model.Subject</td>
+    </tr>
+
+    <tr>
+        <th>Mesaj: </th>
+        <td>@Model.Body</td>
+    </tr>
+
+</table>
+
+<a class="btn btn-primary" href="/Message/Inbox">Gelen Kutusu</a>
+

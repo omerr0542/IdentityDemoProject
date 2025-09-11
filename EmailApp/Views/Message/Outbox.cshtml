@@ -1,0 +1,33 @@
+﻿@model List<Message>
+@{
+    ViewData["Title"] = "Outbox";
+    int count = 0;
+}
+
+<h3>Gelen Mesajlar</h3>
+
+<table class="table table-bordered table-stried">
+    <tr>
+        <th>#</th>
+        <th>Ad Soyad</th>
+        <th>Email</th>
+        <th>Konu</th>
+        <th>Mesaj Tarihi</th>
+        <th>Mesajı Aç</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        count++;
+        <tr>
+            <td>@count</td>
+            <td>@item.Receiver.FirstName @item.Receiver.LastName</td>
+            <td>@item.Receiver.Email</td>
+            <td>@item.Subject</td>
+            <td>@item.SendDate.ToString("dd/MM/yyyy - hh:mm")</td>
+            @* Burada gönderilen mesajın detay sayfasına gitme eklenecek *@
+        </tr>
+    }
+</table>
+
+<a href="/Message/SendMessage" class="btn btn-info">Mesaj Gönder</a>
